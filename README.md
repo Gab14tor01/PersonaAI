@@ -48,3 +48,53 @@ Inspirado em narrativas de tecnologia e consciência artificial.
 ```bash
 git clone https://github.com/Gab14tor01/PersonaAI.git
 cd PersonaAI
+```
+### 2. Instale as dependências
+```bash
+pip install -r requirements.txt
+```
+### 3. Execute o projeto
+```bash
+python src/main.py
+```
+
+---
+
+## Requisitos
+
+- Python instalado
+- FFmpeg configurado no sistema (necessário para o Whisper)
+
+---
+
+## Status do projeto
+
+Versão funcional com melhorias planejadas.
+
+---
+
+## Possíveis melhorias futuras
+
+- Memória persistente (salvar histórico em arquivo)
+- Interface gráfica
+- Ativação por comando de voz
+- Integração com modelos de IA mais avançados
+
+---
+
+## Autor
+
+Gabriel Silva
+
+---
+
+## Considerações
+
+Projeto desenvolvido com foco em aprendizado prático de:
+
+- integração de bibliotecas
+- manipulação de áudio
+- organização de código
+- construção de sistemas interativos
+
+---
