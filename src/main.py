@@ -1,22 +1,24 @@
 from personas import PERSONAS
 from voz import gravar_audio, transcrever, falar
 
-MODO_SIMULACAO = True
+historico = []
 
 def responder(texto, persona="critico"):
+    contexto = " | ".join(historico[-2:]) if historico else "nenhum histórico relevante"
+
     if persona == "critico":
-        return f"Você realmente acredita nisso? Ou está só evitando encarar o problema quando diz: '{texto}'?"
+        return f"Você disse antes: {contexto}. Agora você fala '{texto}'. Percebe algum padrão?"
 
     elif persona == "racional":
-        return f"Analisando friamente: '{texto}' não resolve nada. Qual ação concreta você vai tomar?"
+        return f"Histórico recente: {contexto}. Analise logicamente o que você acabou de dizer: '{texto}'."
 
     elif persona == "ideal":
-        return f"A melhor versão de você não diria '{texto}'. Ela agiria apesar disso."
+        return f"Comparando com o que você disse antes ({contexto}), você pode fazer melhor do que '{texto}'."
 
     elif persona == "pessimista":
-        return f"Se você continuar pensando assim ('{texto}'), provavelmente nada vai mudar — ou pode até piorar."
+        return f"Você já vem repetindo isso: {contexto}. E agora diz '{texto}'. Isso não parece bom."
 
-    return "Não consegui processar isso."
+    return "Não consegui processar."
 
 def main():
     print("🧠 Echo AI iniciado...")
@@ -42,21 +44,38 @@ def main():
     print(f"\nPersona selecionada: {persona}\n")
 
     while True:
-        comando = input("\nPressione ENTER para falar ou digite 'sair': ")
+        comando = input("\nPressione ENTER para falar, 'reset' para limpar memória ou 'sair': ")
 
         if comando.lower() == "sair":
             print("Encerrando...")
             break
+
+        if comando.lower() == "reset":
+            historico.clear()
+            print("🧠 Memória apagada!")
+            continue
 
         gravar_audio()
 
         texto = transcrever()
         print("Você:", texto)
 
+        historico.append(texto)
+        if len(historico) > 10:
+            historico.pop(0)
+
+
+        if not texto.strip():
+            print("Não entendi o áudio, tenta novamente.")
+            continue
+
         resposta = responder(texto, persona)
+        
+
         print("Echo:", resposta)
 
         falar(resposta)
+
 
 if __name__ == "__main__":
     main()

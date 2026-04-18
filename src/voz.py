@@ -4,6 +4,8 @@ import whisper
 from gtts import gTTS
 import os
 
+language = "pt"
+
 # carregar modelo Whisper
 model = whisper.load_model("base")
 
@@ -15,7 +17,7 @@ def gravar_audio(nome="input.wav", duracao=5, fs=44100):
     print("✅ Áudio gravado!")
 
 def transcrever():
-    resultado = model.transcribe("input.wav")
+    resultado = model.transcribe("input.wav", language=language)
     return resultado["text"]
 
 def falar(texto):
